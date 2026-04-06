@@ -82,9 +82,10 @@ const getCategoryData = (transactions: Transaction[]) => {
 interface DashboardProps {
   transactions: Transaction[];
   onAddClick: () => void;
+  userName: string;
 }
 
-export default function Dashboard({ transactions, onAddClick }: DashboardProps) {
+export default function Dashboard({ transactions, onAddClick, userName }: DashboardProps) {
   const weeklyData = getWeeklyData(transactions);
   const categories = getCategoryData(transactions);
 
@@ -107,7 +108,7 @@ export default function Dashboard({ transactions, onAddClick }: DashboardProps) 
               {format(new Date(), "EEEE, d MMMM yyyy", { locale: id })}
             </div>
           </div>
-          <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-900 text-center md:text-left">Halo, Selamat Datang!</h1>
+          <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-900 text-center md:text-left">Halo, {userName}!</h1>
           <p className="text-slate-500 mt-1 text-center md:text-left text-sm md:text-base font-medium">Berikut ringkasan keuangan Anda periode ini.</p>
         </div>
         <button 

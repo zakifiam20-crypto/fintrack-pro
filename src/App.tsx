@@ -3,6 +3,7 @@ import Sidebar from "./components/Sidebar";
 import Dashboard from "./components/Dashboard";
 import TransactionList from "./components/TransactionList";
 import AddTransaction from "./components/AddTransaction";
+import SettingsPage from "./components/SettingsPage";
 import { Transaction, TransactionType } from "./types";
 import { Settings, Menu, X, TrendingUp } from "lucide-react";
 
@@ -10,6 +11,7 @@ import { supabase } from "./lib/supabase";
 
 export default function App() {
   const [activeTab, setActiveTab] = React.useState("dashboard");
+  const [userName, setUserName] = React.useState("Selamat Datang");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = React.useState(false);
   const [editTransaction, setEditTransaction] = React.useState<Transaction | null>(null);
@@ -147,6 +149,28 @@ export default function App() {
     }
   };
 
+  const handleDeleteAllData = async () => {
+    // Fallback dummy data
+    if (!import.meta.env.VITE_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL === "YOUR_SUPABASE_URL") {
+      setTransactions([]);
+      return;
+    }
+
+    try {
+      // Menghapus baris satu per satu atau dengan range (Supabase butuh filter untuk delete)
+      const { error } = await supabase
+        .from("transactions")
+        .delete()
+        .neq("id", "0"); // Delete all
+
+      if (error) throw error;
+      setTransactions([]);
+      alert("Semua data berhasil dibersihkan!");
+    } catch (err) {
+      console.error("Error deleting all data:", err);
+    }
+  };
+
   const balance = transactions.reduce((acc, t) => 
     t.type === "income" ? acc + t.amount : acc - t.amount, 0
   );
@@ -188,6 +212,7 @@ export default function App() {
               <Dashboard 
                 transactions={transactions} 
                 onAddClick={() => setIsAddModalOpen(true)} 
+                userName={userName}
               />
             )
           )}
@@ -204,13 +229,12 @@ export default function App() {
           )}
 
           {activeTab === "settings" && (
-            <div className="flex flex-col items-center justify-center h-[60vh] text-center space-y-4">
-              <div className="w-20 h-20 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center">
-                <Settings size={40} />
-              </div>
-              <h2 className="text-2xl font-bold text-slate-900">Pengaturan Akun</h2>
-              <p className="text-slate-500 max-w-md">Kelola profil, preferensi mata uang, dan notifikasi Anda di sini.</p>
-            </div>
+            <SettingsPage 
+              userName={userName}
+              onUpdateUserName={setUserName}
+              onDeleteAllData={handleDeleteAllData}
+              transactions={transactions}
+            />
           )}
         </div>
       </main>
