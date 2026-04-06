@@ -4,12 +4,13 @@ import Dashboard from "./components/Dashboard";
 import TransactionList from "./components/TransactionList";
 import AddTransaction from "./components/AddTransaction";
 import { Transaction, TransactionType } from "./types";
-import { Settings } from "lucide-react";
+import { Settings, Menu, X, TrendingUp } from "lucide-react";
 
 import { supabase } from "./lib/supabase";
 
 export default function App() {
   const [activeTab, setActiveTab] = React.useState("dashboard");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = React.useState(false);
   const [editTransaction, setEditTransaction] = React.useState<Transaction | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -151,9 +152,31 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen bg-slate-50">
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} balance={balance} />
+      <Sidebar 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        balance={balance} 
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+      />
       
-      <main className="flex-1 ml-64 p-10">
+      <main className="flex-1 lg:ml-64 p-4 md:p-10 pb-24 md:pb-10">
+        {/* Mobile Header */}
+        <div className="lg:hidden flex items-center justify-between p-4 bg-white border-b border-slate-200 -mx-4 -mt-4 mb-6 sticky top-0 z-30">
+          <div className="flex items-center gap-2 text-brand-600">
+            <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white shadow-md shadow-brand-200">
+              <TrendingUp size={18} />
+            </div>
+            <span className="text-lg font-display font-bold tracking-tight text-slate-900">FinTrack Pro</span>
+          </div>
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-2 hover:bg-slate-100 rounded-xl transition-colors"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
         <div className="max-w-6xl mx-auto">
           {activeTab === "dashboard" && (
             isLoading ? (
