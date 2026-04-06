@@ -29,9 +29,12 @@ export default function App() {
     }
   }, [isDarkMode]);
 
+  React.useEffect(() => {
+    localStorage.setItem("fintrack_user", userName);
+  }, [userName]);
+
   const handleUpdateUserName = (name: string) => {
     setUserName(name);
-    localStorage.setItem("fintrack_user", name);
   };
 
   React.useEffect(() => {
