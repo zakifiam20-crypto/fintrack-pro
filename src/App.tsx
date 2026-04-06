@@ -22,19 +22,19 @@ export default function App() {
   React.useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add("dark");
-      localStorage.setItem("fintrack_theme", "dark");
     } else {
       document.documentElement.classList.remove("dark");
-      localStorage.setItem("fintrack_theme", "light");
     }
   }, [isDarkMode]);
 
-  React.useEffect(() => {
-    localStorage.setItem("fintrack_user", userName);
-  }, [userName]);
-
   const handleUpdateUserName = (name: string) => {
     setUserName(name);
+    localStorage.setItem("fintrack_user", name);
+  };
+
+  const handleUpdateDarkMode = (isDark: boolean) => {
+    setIsDarkMode(isDark);
+    localStorage.setItem("fintrack_theme", isDark ? "dark" : "light");
   };
 
   React.useEffect(() => {
@@ -254,7 +254,7 @@ export default function App() {
               onDeleteAllData={handleDeleteAllData}
               transactions={transactions}
               isDarkMode={isDarkMode}
-              onUpdateDarkMode={setIsDarkMode}
+              onUpdateDarkMode={handleUpdateDarkMode}
             />
           )}
         </div>

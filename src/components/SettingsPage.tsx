@@ -179,18 +179,22 @@ export default function SettingsPage({
                   <Moon size={18} className="text-slate-400" />
                   <span className="text-sm font-medium text-slate-700">Mode Gelap</span>
                 </div>
-                <div 
-                  onClick={() => onUpdateDarkMode(!isDarkMode)}
+                <button 
+                  type="button"
+                  onClick={() => {
+                    console.log("Toggling Dark Mode to:", !isDarkMode);
+                    onUpdateDarkMode(!isDarkMode);
+                  }}
                   className={cn(
-                    "w-10 h-5 rounded-full relative cursor-pointer transition-colors duration-200",
-                    isDarkMode ? "bg-brand-500" : "bg-slate-200"
+                    "w-10 h-5 rounded-full relative transition-colors duration-200 outline-none ring-offset-2 focus:ring-2 focus:ring-brand-500",
+                    isDarkMode ? "bg-brand-500" : "bg-slate-300"
                   )}
                 >
                   <div className={cn(
                     "w-4 h-4 bg-white rounded-full absolute top-0.5 transition-all duration-200 shadow-sm",
                     isDarkMode ? "right-0.5" : "left-0.5"
                   )} />
-                </div>
+                </button>
               </div>
 
               <div className="flex items-center justify-between">
