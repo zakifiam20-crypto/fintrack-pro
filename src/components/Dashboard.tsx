@@ -21,6 +21,8 @@ import {
 } from "recharts";
 import { formatCurrency, cn } from "../lib/utils";
 import { Transaction } from "../types";
+import { format } from "date-fns";
+import { id } from "date-fns/locale";
 import { motion } from "motion/react";
 
 // Kita akan menghitung data ini secara dinamis dari transaksi
@@ -100,8 +102,13 @@ export default function Dashboard({ transactions, onAddClick }: DashboardProps) 
     <div className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
+          <div className="flex items-center gap-3 mb-2 justify-center md:justify-start">
+            <div className="px-3 py-1 bg-brand-50 text-brand-600 rounded-full text-xs font-bold border border-brand-100 uppercase tracking-wider">
+              {format(new Date(), "EEEE, d MMMM yyyy", { locale: id })}
+            </div>
+          </div>
           <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-900 text-center md:text-left">Halo, Selamat Datang!</h1>
-          <p className="text-slate-500 mt-1 text-center md:text-left text-sm md:text-base">Berikut ringkasan keuangan Anda bulan ini.</p>
+          <p className="text-slate-500 mt-1 text-center md:text-left text-sm md:text-base font-medium">Berikut ringkasan keuangan Anda periode ini.</p>
         </div>
         <button 
           onClick={onAddClick}
