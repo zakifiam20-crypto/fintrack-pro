@@ -58,30 +58,30 @@
 }
 
 .dark input, .dark select, .dark textarea {
-  @apply bg-slate-800 text-white border-slate-700 !important;
+  @apply bg-slate-800 text-white border-slate-700;
 }
 
 .dark .bg-slate-50 {
-  @apply bg-slate-800/50 !important;
+  @apply bg-slate-800/50;
 }
 
 .dark .text-slate-500 {
-  @apply text-slate-400 !important;
+  @apply text-slate-400;
 }
 
 .dark .text-slate-900 {
-  @apply text-white !important;
+  @apply text-white;
 }
 
 .dark .border-slate-100 {
-  @apply border-slate-800 !important;
+  @apply border-slate-800;
 }
 
 .dark .bg-white {
-  @apply bg-slate-900 !important;
+  background-color: var(--color-slate-900) !important;
 }
 
 .dark .hover\:bg-slate-50:hover {
-  @apply bg-slate-800 !important;
+  @apply bg-slate-800;
 }
 
