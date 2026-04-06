@@ -35,7 +35,7 @@ const getWeeklyData = (transactions: Transaction[]) => {
 
   transactions.forEach(t => {
     const tDate = new Date(t.date);
-    if (tDate >= sevenDaysAgo) {
+    if (!isNaN(tDate.getTime()) && tDate >= sevenDaysAgo) {
       const dayName = days[tDate.getDay()];
       const dayData = weeklyData.find(d => d.name === dayName);
       if (dayData) {
