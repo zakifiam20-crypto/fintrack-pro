@@ -161,9 +161,9 @@ export default function App() {
         onClose={() => setIsMobileMenuOpen(false)}
       />
       
-      <main className="flex-1 lg:ml-64 p-4 md:p-10 pb-24 md:pb-10">
+      <main className="flex-1 md:ml-64 p-4 md:p-10 pb-24 md:pb-10">
         {/* Mobile Header */}
-        <div className="lg:hidden flex items-center justify-between p-4 bg-white border-b border-slate-200 -mx-4 -mt-4 mb-6 sticky top-0 z-30">
+        <div className="md:hidden flex items-center justify-between p-4 bg-white border-b border-slate-200 -mx-4 -mt-4 mb-6 sticky top-0 z-30">
           <div className="flex items-center gap-2 text-brand-600">
             <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white shadow-md shadow-brand-200">
               <TrendingUp size={18} />
