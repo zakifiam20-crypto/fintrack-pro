@@ -11,6 +11,7 @@ interface AddTransactionProps {
     category: string;
     description: string;
     type: TransactionType;
+    date: string;
   }) => void;
   editTransaction?: Transaction | null;
 }
@@ -20,6 +21,7 @@ export default function AddTransaction({ isOpen, onClose, onAdd, editTransaction
   const [amount, setAmount] = React.useState("");
   const [category, setCategory] = React.useState("");
   const [description, setDescription] = React.useState("");
+  const [date, setDate] = React.useState(new Date().toISOString().split('T')[0]);
 
   React.useEffect(() => {
     if (editTransaction) {
@@ -27,11 +29,13 @@ export default function AddTransaction({ isOpen, onClose, onAdd, editTransaction
       setAmount(editTransaction.amount.toString());
       setCategory(editTransaction.category);
       setDescription(editTransaction.description);
+      setDate(new Date(editTransaction.date).toISOString().split('T')[0]);
     } else {
       setType("expense");
       setAmount("");
       setCategory("");
       setDescription("");
+      setDate(new Date().toISOString().split('T')[0]);
     }
   }, [editTransaction, isOpen]);
 
@@ -43,7 +47,8 @@ export default function AddTransaction({ isOpen, onClose, onAdd, editTransaction
       amount: parseFloat(amount),
       category,
       description,
-      type
+      type,
+      date: new Date(date).toISOString()
     });
     setAmount("");
     setCategory("");
@@ -121,6 +126,17 @@ export default function AddTransaction({ isOpen, onClose, onAdd, editTransaction
               <option value="Gaji">Gaji</option>
               <option value="Lainnya">Lainnya</option>
             </select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Tanggal</label>
+            <input
+              required
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="w-full px-4 py-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-brand-500 text-slate-900 font-bold"
+            />
           </div>
 
           <div className="space-y-2">

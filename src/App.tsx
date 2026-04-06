@@ -53,13 +53,13 @@ export default function App() {
     category: string;
     description: string;
     type: TransactionType;
+    date: string;
   }) => {
     // Fallback ke dummy data jika Supabase belum dikonfigurasi
     if (!import.meta.env.VITE_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL === "YOUR_SUPABASE_URL") {
       const transaction: Transaction = {
         ...newTransaction,
         id: Math.random().toString(36).substr(2, 9),
-        date: new Date().toISOString()
       };
       setTransactions([transaction, ...transactions]);
       return;
@@ -71,7 +71,7 @@ export default function App() {
         category: newTransaction.category,
         description: newTransaction.description,
         type: newTransaction.type,
-        date: new Date().toISOString()
+        date: newTransaction.date
       };
 
       const { data, error } = await supabase
@@ -114,6 +114,7 @@ export default function App() {
     category: string;
     description: string;
     type: TransactionType;
+    date: string;
   }) => {
     if (!editTransaction) return;
 
