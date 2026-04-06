@@ -19,7 +19,11 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 font-sans antialiased;
+    @apply bg-slate-50 text-slate-900 font-sans antialiased transition-colors duration-300;
+  }
+  
+  .dark body {
+    @apply bg-slate-950 text-slate-50;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -28,26 +32,56 @@
 }
 
 .glass-card {
-  background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  border-radius: 1rem;
+  @apply bg-white/80 backdrop-blur-xl border border-slate-100 shadow-sm rounded-2xl;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .glass-card {
+  @apply bg-slate-900/40 border-slate-800 shadow-none;
 }
 
 .stat-card {
-  padding: 1.5rem;
-  background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  border-radius: 1rem;
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
+  @apply p-6 bg-white/80 backdrop-blur-xl border border-slate-100 shadow-sm rounded-2xl;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .stat-card {
+  @apply bg-slate-900/40 border-slate-800 shadow-none;
 }
 
 .stat-card:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  @apply shadow-lg translate-y-[-2px];
+}
+
+.dark .stat-card:hover {
+  @apply bg-slate-900/60 border-slate-700 shadow-none;
+}
+
+.dark input, .dark select, .dark textarea {
+  @apply bg-slate-800 text-white border-slate-700 !important;
+}
+
+.dark .bg-slate-50 {
+  @apply bg-slate-800/50 !important;
+}
+
+.dark .text-slate-500 {
+  @apply text-slate-400 !important;
+}
+
+.dark .text-slate-900 {
+  @apply text-white !important;
+}
+
+.dark .border-slate-100 {
+  @apply border-slate-800 !important;
+}
+
+.dark .bg-white {
+  @apply bg-slate-900 !important;
+}
+
+.dark .hover\:bg-slate-50:hover {
+  @apply bg-slate-800 !important;
 }
 

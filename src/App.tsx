@@ -11,12 +11,28 @@ import { supabase } from "./lib/supabase";
 
 export default function App() {
   const [activeTab, setActiveTab] = React.useState("dashboard");
-  const [userName, setUserName] = React.useState("Selamat Datang");
+  const [userName, setUserName] = React.useState(() => localStorage.getItem("fintrack_user") || "Selamat Datang");
+  const [isDarkMode, setIsDarkMode] = React.useState(() => localStorage.getItem("fintrack_theme") === "dark");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = React.useState(false);
   const [editTransaction, setEditTransaction] = React.useState<Transaction | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [transactions, setTransactions] = React.useState<Transaction[]>([]);
+
+  React.useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("fintrack_theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("fintrack_theme", "light");
+    }
+  }, [isDarkMode]);
+
+  const handleUpdateUserName = (name: string) => {
+    setUserName(name);
+    localStorage.setItem("fintrack_user", name);
+  };
 
   React.useEffect(() => {
     fetchTransactions();
@@ -231,9 +247,11 @@ export default function App() {
           {activeTab === "settings" && (
             <SettingsPage 
               userName={userName}
-              onUpdateUserName={setUserName}
+              onUpdateUserName={handleUpdateUserName}
               onDeleteAllData={handleDeleteAllData}
               transactions={transactions}
+              isDarkMode={isDarkMode}
+              onUpdateDarkMode={setIsDarkMode}
             />
           )}
         </div>

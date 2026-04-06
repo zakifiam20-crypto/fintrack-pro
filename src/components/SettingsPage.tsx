@@ -18,15 +18,23 @@ interface SettingsPageProps {
   onUpdateUserName: (name: string) => void;
   onDeleteAllData: () => void;
   transactions: Transaction[];
+  isDarkMode: boolean;
+  onUpdateDarkMode: (isDark: boolean) => void;
 }
 
 export default function SettingsPage({ 
   userName, 
   onUpdateUserName, 
   onDeleteAllData,
-  transactions 
+  transactions,
+  isDarkMode,
+  onUpdateDarkMode 
 }: SettingsPageProps) {
   const [name, setName] = React.useState(userName);
+
+  React.useEffect(() => {
+    setName(userName);
+  }, [userName]);
 
   const exportToCSV = () => {
     if (transactions.length === 0) {
@@ -171,8 +179,17 @@ export default function SettingsPage({
                   <Moon size={18} className="text-slate-400" />
                   <span className="text-sm font-medium text-slate-700">Mode Gelap</span>
                 </div>
-                <div className="w-10 h-5 bg-slate-200 rounded-full relative cursor-not-allowed">
-                  <div className="w-4 h-4 bg-white rounded-full absolute left-0.5 top-0.5" />
+                <div 
+                  onClick={() => onUpdateDarkMode(!isDarkMode)}
+                  className={cn(
+                    "w-10 h-5 rounded-full relative cursor-pointer transition-colors duration-200",
+                    isDarkMode ? "bg-brand-500" : "bg-slate-200"
+                  )}
+                >
+                  <div className={cn(
+                    "w-4 h-4 bg-white rounded-full absolute top-0.5 transition-all duration-200 shadow-sm",
+                    isDarkMode ? "right-0.5" : "left-0.5"
+                  )} />
                 </div>
               </div>
 
